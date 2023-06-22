@@ -15,7 +15,9 @@ const createScene =  () => {
 
     //const box = MeshBuilder.CreateBox("box", {}, scene);
 
-    SceneLoader.Append("/assets/scenes/gltf2/Sponza/glTF/", "Sponza.gltf", scene);
+    SceneLoader.Append("/assets/scenes/gltf2/Sponza/glTF/", "Sponza.gltf", scene, (container) => {
+        console.log(container);
+    });
 
     // Create SSAO and configure all properties (for the example)
     const ssaoRatio = {
