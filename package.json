@@ -20,10 +20,11 @@
   },
   "homepage": "https://github.com/zhengweifu/babylonjs-sandbox#readme",
   "dependencies": {
-    "@babylonjs/core": "^6.8.0",
     "esbuild-wasm": "latest"
   },
   "devDependencies": {
+    "@babylonjs/core": "^6.8.0",
+    "@babylonjs/loaders": "^6.8.0",
     "esbuild": "npm:esbuild-wasm@latest",
     "gl-matrix": "^3.4.3",
     "typescript": "^4.9.3",
