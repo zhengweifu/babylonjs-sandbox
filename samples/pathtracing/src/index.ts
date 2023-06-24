@@ -1,11 +1,21 @@
-import { Engine, Scene, ArcRotateCamera, HemisphericLight, Vector3, MeshBuilder, SceneLoader, SSAORenderingPipeline} from "@babylonjs/core"
+import { Engine, WebGPUEngine, Scene, ArcRotateCamera, HemisphericLight, Vector3, MeshBuilder, SceneLoader, SSAORenderingPipeline, RawTexture, StorageBuffer } from "@babylonjs/core"
 import "@babylonjs/loaders/glTF"
 
 let canvas = document.getElementById('babylonjs-sandbox-canvas') as HTMLCanvasElement;
 
-let engine = new Engine(canvas, true, {preserveDrawingBuffer: true, stencil: true});
 
-const createScene =  () => {
+const createEngine = async (usingWebGPU: boolean) => {
+    if (usingWebGPU) {
+        let engine = new WebGPUEngine(canvas);
+        await engine.initAsync();
+        return engine;
+    } else {
+        let engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+        return engine;
+    }
+};
+
+const createScene = (engine: Engine) => {
     const scene = new Scene(engine);
 
     const camera = new ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 3, new Vector3(0, 2, 0));
@@ -17,6 +27,7 @@ const createScene =  () => {
 
     SceneLoader.Append("/assets/scenes/gltf2/Sponza/glTF/", "Sponza.gltf", scene, (container) => {
         console.log(container);
+        //RawTexture.CreateRGBATexture(2048, 2048, scene);
     });
 
     // Create SSAO and configure all properties (for the example)
@@ -38,7 +49,9 @@ const createScene =  () => {
     return scene;
 }
 
-let scene = createScene();
+let engine = await createEngine(true);
+
+let scene = createScene(engine);
 
 engine.runRenderLoop(() => {
     scene.render();
