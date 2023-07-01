@@ -42,6 +42,8 @@ const createScene = (engine: Engine) => {
 
     const box = MeshBuilder.CreateBox("box", {}, scene);
 
+    const plane = MeshBuilder.CreatePlane("floor", {}, scene);
+
     // Attach camera to the SSAO render pipeline
     scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("ssao", camera);
 
