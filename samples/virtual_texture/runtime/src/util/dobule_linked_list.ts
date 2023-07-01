@@ -1,3 +1,6 @@
+/**
+ * 双向链表节点
+ */
 export class DobuleLinkedListNode<K, V> {
     key: K | undefined;
     value: V | undefined;
@@ -11,6 +14,9 @@ export class DobuleLinkedListNode<K, V> {
     }
 }
 
+/**
+ * 双向链表
+ */
 export class DobuleLinkedList<K, V> {
     private head_: DobuleLinkedListNode<K, V>;
     private tail_: DobuleLinkedListNode<K, V>;
@@ -22,7 +28,11 @@ export class DobuleLinkedList<K, V> {
         this.tail_.front = this.head_;
         this.tail_.back = this.head_;
     }
-
+    /**
+     * 往链表头部添加节点
+     * @param node 链表节点
+     * @returns 链表节点对于的 value
+     */
     public insertHead(node: DobuleLinkedListNode<K, V>): K {
         let back: DobuleLinkedListNode<K, V> = this.head_.back as DobuleLinkedListNode<K, V>;
         this.head_.back = node;
@@ -33,6 +43,11 @@ export class DobuleLinkedList<K, V> {
         return node.value as K;
     }
 
+    /**
+     * 从双向链表中删除节点
+     * @param node 链表节点
+     * @returns 被删除的链表节点的 key
+     */
     public delete(node: DobuleLinkedListNode<K, V>): K {
         node.front!.back = node.back;
         node.back!.front = node.front;
@@ -40,7 +55,12 @@ export class DobuleLinkedList<K, V> {
         return node.value as K;
     }
 
+    /**
+     * 删除双向链表的最后一个节点
+     * @returns 删除的节点的 key
+     */
     public deleteLast() : K | undefined {
+        // 当链表中没有节点，返回undefined
         if (this.head_.back === this.tail_) {
             return;
         } else {
@@ -48,6 +68,10 @@ export class DobuleLinkedList<K, V> {
         }
     }
 
+    /**
+     * 遍历双向链表
+     * @param callback 遍历每个节点时需要执行的回调函数
+     */
     public forEeach(callback : (key?: K, value?: V) => void) {
         let it = this.head_.back!;
         while(it != this.tail_) {

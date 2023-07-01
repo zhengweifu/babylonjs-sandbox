@@ -1,6 +1,10 @@
 import { DobuleLinkedListNode, DobuleLinkedList } from "./dobule_linked_list";
 
+/**
+ * LRU 缓存
+ */
 export class LruCache<K, V> {
+    // 缓存的最大值
     private capacity_: number;
     private map_: Map<K, DobuleLinkedListNode<K, V>>;
     private list_: DobuleLinkedList<K, V>;
@@ -11,8 +15,13 @@ export class LruCache<K, V> {
         this.list_ = new DobuleLinkedList();
     }
 
+    /**
+     * 往缓存中添加节点
+     * @param key 缓存节点的 key 值
+     * @param value 缓存节点的 value 值
+     */
     public put(key: K, value: V) {
-        if(this.map_.has(key)) {
+        if(this.map_.has(key)) { // 当字典中存在缓存节点，则需要更新缓存节点中 value 值，并将该缓存节点移动到链表的头部。
             let node = this.map_.get(key)!;
             node.value  = value; // 更新链表节点的 value 值
             this.list_.delete(node); // 从链表中删除
@@ -35,6 +44,11 @@ export class LruCache<K, V> {
         }
     }
 
+    /**
+     * 根据给定的key值，查询缓存节点
+     * @param key 缓存节点的 key 值
+     * @returns 获取到的节点的value值
+     */  
     public get(key: K) : V | undefined {
         if(this.map_.has(key)) {
             // 如果存在 key，返回 value， 并更新到链表的头部
@@ -46,7 +60,10 @@ export class LruCache<K, V> {
             return;
         }
     }
-
+    /**
+     * 遍历缓存
+     * @param callback 遍历每个缓存时需要执行的回调函数
+     */
     public forEeach(callback : (key?: K, value?: V) => void) {
         this.list_.forEeach(callback);
     }
