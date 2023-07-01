@@ -1,4 +1,4 @@
-import { LruCache } from "../lru_cache"
+import { LruCache } from "../src/util/lru_cache"
 
 const testFunc = () => {
     let cache = new LruCache<number, string>(15);
